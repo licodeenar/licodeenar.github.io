@@ -1,17 +1,307 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
-
 <head>
-    <title>licodeenar</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>りなる. / licodeenar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;700&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <link rel="icon" href="img/favicon.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    :root {
+      --ink:      #1a1a2e;
+      --ink-soft: #4a4a62;
+      --teal:     #3d7a8a;
+      --teal-dim: #c8dde2;
+      --bg:       #f8f9fa;
+      --surface:  #ffffff;
+      --border:   #e2e5ea;
+      --mono:     'IBM Plex Mono', monospace;
+      --sans:     'Zen Kaku Gothic New', sans-serif;
+    }
 
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 64px 24px 48px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .handle {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--teal);
+      letter-spacing: 0.12em;
+      text-transform: lowercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .tagline {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      font-weight: 300;
+      max-width: 480px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 16px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .social-links a:hover {
+      color: var(--teal);
+      border-color: var(--teal);
+    }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 96px;
+    }
+
+    /* ── SECTION ── */
+    section {
+      margin-bottom: 56px;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── CARD ── */
+    .card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin-bottom: 10px;
+      position: relative;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      overflow: hidden;
+    }
+
+    /* シグネチャ：左ボーダーライン演出 */
+    .card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 3px;
+      height: 0;
+      background: var(--teal);
+      transform: translateY(-50%);
+      transition: height 0.25s ease;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .card:hover::before {
+      height: 60%;
+    }
+
+    .card:hover {
+      border-color: var(--teal-dim);
+      box-shadow: 0 2px 16px rgba(61, 122, 138, 0.08);
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      font-weight: 300;
+    }
+
+    .card-url {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--teal);
+      margin-top: 8px;
+      opacity: 0.7;
+    }
+
+    /* 非推奨バッジ */
+    .card.deprecated {
+      opacity: 0.55;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      background: var(--border);
+      color: var(--ink-soft);
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 32px 24px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--ink-soft);
+      letter-spacing: 0.06em;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card, .card::before, .social-links a { transition: none; }
+    }
+
+    @media (max-width: 480px) {
+      header { padding: 40px 20px 32px; }
+      main { padding: 0 20px 64px; }
+      h1 { font-size: 1.8rem; }
+    }
+  </style>
 </head>
-
 <body>
-    <a href="https://github.com/licodeenar">@licodeenar</a>
-</body>
 
+<header>
+  <p class="handle">@licodeenar</p>
+  <h1>りなる.</h1>
+  <p class="tagline">しない・をする。しないを受け容れると世界はやさしくつながっていく。<br>哲う兎。詩う兎。IT業務アーキテクト。</p>
+  <nav class="social-links">
+    <a href="https://note.com/licodeenar" target="_blank" rel="noopener">note</a>
+    <a href="https://x.com/licodeenar" target="_blank" rel="noopener">X (Twitter)</a>
+    <a href="https://github.com/licodeenar" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+</header>
+
+<main>
+
+  <section>
+    <p class="section-label">note お友達ツール</p>
+
+    <a class="card" href="https://licodeenar.github.io/note-likes/" target="_blank" rel="noopener">
+      <div class="card-title">【note】スキをくれたお友だち</div>
+      <div class="card-desc">直近の記事からスキをくれたユーザを集計します。</div>
+      <div class="card-url">licodeenar.github.io/note-likes/</div>
+    </a>
+
+    <a class="card" href="https://licodeenar.github.io/note-comments/" target="_blank" rel="noopener">
+      <div class="card-title">【note】コメントをくれたお友だち</div>
+      <div class="card-desc">直近の記事からコメントをくれたユーザを集計します。</div>
+      <div class="card-url">licodeenar.github.io/note-comments/</div>
+    </a>
+
+    <a class="card" href="https://licodeenar.github.io/note-updated/" target="_blank" rel="noopener">
+      <div class="card-title">【note】おともだち更新状況チェック</div>
+      <div class="card-desc">noteのおともだちが最後に記事をアップした日をチェックします。</div>
+      <div class="card-url">licodeenar.github.io/note-updated/</div>
+    </a>
+
+    <a class="card deprecated" href="https://licodeenar.github.io/notelist/mutual_follow.html" target="_blank" rel="noopener">
+      <div class="card-title">【note】フォローバックのチェック<span class="badge">標準機能で代替可</span></div>
+      <div class="card-desc">noteのフォローバックを一括チェックする。</div>
+      <div class="card-url">licodeenar.github.io/notelist/mutual_follow.html</div>
+    </a>
+
+    <a class="card deprecated" href="https://licodeenar.github.io/notelist/index.html" target="_blank" rel="noopener">
+      <div class="card-title">【note】おともだちリスト<span class="badge">標準機能で代替可</span></div>
+      <div class="card-desc">noteのフォロー・フォロワーを一括取得するサイト。</div>
+      <div class="card-url">licodeenar.github.io/notelist/</div>
+    </a>
+  </section>
+
+  <section>
+    <p class="section-label">Chrome 拡張機能</p>
+
+    <a class="card" href="https://github.com/licodeenar/note-follower-checker-addon" target="_blank" rel="noopener">
+      <div class="card-title">note フォロワーチェッカー</div>
+      <div class="card-desc">フォロワーリストを取得し、前回との差分（新規・フォロー外し）を表示するChrome拡張。バックグラウンドで動作。</div>
+      <div class="card-url">github.com/licodeenar/note-follower-checker-addon</div>
+    </a>
+  </section>
+
+  <section>
+    <p class="section-label">その他ツール</p>
+
+    <a class="card" href="https://licodeenar.github.io/bclock/" target="_blank" rel="noopener">
+      <div class="card-title">ブラウザで時計</div>
+      <div class="card-desc">ブラウザにデジタル時計を表示するサイト。</div>
+      <div class="card-url">licodeenar.github.io/bclock/</div>
+    </a>
+
+    <a class="card" href="https://licodeenar.github.io/taiheki_checker/" target="_blank" rel="noopener">
+      <div class="card-title">体癖チェッカー</div>
+      <div class="card-desc">あなたの体癖タイプを判定します。</div>
+      <div class="card-url">licodeenar.github.io/taiheki_checker/</div>
+    </a>
+  </section>
+
+  <section>
+    <p class="section-label">りな塾</p>
+
+    <a class="card" href="https://licodeenar.github.io/lina-juku/" target="_blank" rel="noopener">
+      <div class="card-title">りな塾：目次</div>
+      <div class="card-desc">１日５分の脳トレ。プログラミングで遊ぼう。</div>
+      <div class="card-url">licodeenar.github.io/lina-juku/</div>
+    </a>
+  </section>
+
+</main>
+
+<footer>
+  licodeenar.github.io
+</footer>
+
+</body>
 </html>
