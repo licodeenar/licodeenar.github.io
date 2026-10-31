@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /readme.md
+
+Sitemap: https://licodeenar.github.io/sitemap.xml
