@@ -77,17 +77,17 @@
     /* ── HEADER：noteのクリエイターページ風（中央寄せ） ── */
     header {
       text-align: center;
-      padding: 64px 24px 48px;
+      padding: 56px 24px 40px;
       max-width: 640px;
       margin: 0 auto;
     }
 
     .avatar {
-      width: 96px;
-      height: 96px;
+      width: 88px;
+      height: 88px;
       border-radius: 50%;
       box-shadow: var(--shadow);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     h1 {
@@ -117,7 +117,7 @@
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-top: 24px;
+      margin-top: 20px;
       flex-wrap: wrap;
     }
 
@@ -129,9 +129,8 @@
       border: 1px solid var(--border);
       background: var(--surface);
       border-radius: 999px;
-      padding: 7px 20px;
-      box-shadow: var(--shadow);
-      transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
+      padding: 6px 18px;
+      transition: color 0.2s, border-color 0.2s;
     }
 
     .social-links a:hover {
@@ -139,10 +138,50 @@
       border-color: var(--accent);
     }
 
+    /* ── カテゴリ目次：スクロール中も上部に固定 ── */
+    .toc {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .toc ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .toc ul::-webkit-scrollbar { display: none; }
+
+    .toc a {
+      display: block;
+      white-space: nowrap;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+      text-decoration: none;
+      padding: 4px 12px;
+      border-radius: 999px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .toc a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
     /* ── MAIN ── */
     main {
       background: var(--bg-section);
-      padding: 48px 24px 80px;
+      padding: 40px 24px 80px;
     }
 
     .container {
@@ -150,14 +189,16 @@
       margin: 0 auto;
     }
 
-    section { margin-bottom: 48px; }
+    section {
+      margin-bottom: 48px;
+      scroll-margin-top: 80px;
+    }
     section:last-child { margin-bottom: 0; }
 
-    /* セクション見出し：note風のシンプルな太字＋件数 */
+    /* セクション見出し：太字＋件数＋ひとこと説明 */
     .section-title {
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: 700;
-      margin-bottom: 16px;
       display: flex;
       align-items: baseline;
       gap: 8px;
@@ -179,70 +220,74 @@
       color: var(--ink-soft);
     }
 
-    /* ── CARD：noteの記事カード風（ボーダーレス＋ソフトシャドウ） ── */
+    .section-lead {
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      margin: 2px 0 16px 16px;
+    }
+
+    /* ── CARD：リンク先のOGP画像をサムネイルにした記事カード風 ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
     .card {
-      display: block;
+      display: flex;
+      flex-direction: column;
       text-decoration: none;
       color: inherit;
       background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 20px 24px;
-      margin-bottom: 12px;
-      position: relative;
-      box-shadow: var(--shadow);
-      transition: box-shadow 0.2s, transform 0.2s;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     }
 
     .card:hover {
+      border-color: var(--accent);
       box-shadow: var(--shadow-hover);
       transform: translateY(-2px);
     }
 
-    /* 外部リンクの矢印 */
-    .card::after {
-      content: '↗';
-      font-family: var(--mono);
-      font-size: 0.85rem;
-      color: var(--accent);
-      position: absolute;
-      top: 18px;
-      right: 20px;
-      opacity: 0;
-      transform: translate(-3px, 3px);
-      transition: opacity 0.2s, transform 0.2s;
+    /* 画像はスクショが多いので、タイトルが入る上端を基準に切り抜く */
+    .card-thumb {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1.91 / 1;
+      object-fit: cover;
+      object-position: top center;
+      background: var(--bg-section);
+      border-bottom: 1px solid var(--border);
     }
 
-    .card:hover::after {
-      opacity: 1;
-      transform: translate(0, 0);
+    .card-body {
+      display: block;
+      flex: 1;
+      padding: 14px 16px 16px;
     }
+
+    .card-title,
+    .card-desc { display: block; }
 
     .card-title {
       font-size: 0.95rem;
       font-weight: 700;
       line-height: 1.5;
-      margin-bottom: 4px;
-      padding-right: 24px;
     }
 
     .card-desc {
-      font-size: 0.83rem;
+      font-size: 0.8rem;
+      line-height: 1.65;
       color: var(--ink-soft);
-    }
-
-    .card-url {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--accent);
-      margin-top: 10px;
-      opacity: 0.85;
+      margin-top: 4px;
     }
 
     /* 非推奨 */
     .card.deprecated {
-      box-shadow: none;
       background: transparent;
-      border: 1px dashed var(--border);
+      border-style: dashed;
       opacity: 0.65;
     }
 
@@ -256,12 +301,13 @@
       display: inline-block;
       font-size: 0.65rem;
       font-weight: 500;
+      line-height: 1.6;
       background: var(--accent-soft);
       color: var(--accent);
-      padding: 2px 8px;
+      padding: 1px 8px;
       border-radius: 999px;
-      margin-left: 8px;
-      vertical-align: middle;
+      margin-left: 6px;
+      vertical-align: 2px;
     }
 
     /* ── FOOTER ── */
@@ -275,15 +321,29 @@
       background: var(--bg);
     }
 
+    html { scroll-behavior: smooth; }
+
     @media (prefers-reduced-motion: reduce) {
-      .card, .card::after, .social-links a { transition: none; }
+      html { scroll-behavior: auto; }
+      .card, .social-links a, .toc a { transition: none; }
     }
 
     @media (max-width: 480px) {
-      header { padding: 48px 20px 36px; }
-      main { padding: 36px 16px 64px; }
-      .avatar { width: 80px; height: 80px; }
-      .card { padding: 18px 20px; }
+      header { padding: 40px 16px 28px; }
+      main { padding: 28px 16px 64px; }
+      .toc ul { justify-content: flex-start; }
+      .avatar { width: 72px; height: 72px; }
+      /* スマホでは縦に長くなりすぎないよう、サムネイルを左に置いた横並びに */
+      .cards { grid-template-columns: 1fr; gap: 10px; }
+      .card { flex-direction: row; align-items: stretch; }
+      .card-thumb {
+        width: 112px;
+        flex-shrink: 0;
+        aspect-ratio: auto;
+        border-bottom: none;
+        border-right: 1px solid var(--border);
+      }
+      .card-body { padding: 12px 14px; }
     }
   </style>
 </head>
@@ -293,92 +353,126 @@
   <img class="avatar" src="https://github.com/licodeenar.png" alt="りなる.">
   <h1>りなる<span class="dot">.</span></h1>
   <p class="handle">@licodeenar</p>
-  <p class="tagline">これまで作成したツールの一覧です。</p>
-  <nav class="social-links">
+  <p class="tagline">これまで作成したツールの一覧です。<br>気になるものをタップすると開きます。</p>
+  <nav class="social-links" aria-label="SNS">
     <a href="https://note.com/licodeenar" target="_blank" rel="noopener">note</a>
     <a href="https://x.com/licodeenar" target="_blank" rel="noopener">X (Twitter)</a>
     <a href="https://github.com/licodeenar" target="_blank" rel="noopener">GitHub</a>
   </nav>
 </header>
 
+<nav class="toc" aria-label="カテゴリ">
+  <ul>
+    <li><a href="#note">note ツール</a></li>
+    <li><a href="#chrome">Chrome 拡張</a></li>
+    <li><a href="#other">その他</a></li>
+    <li><a href="#juku">りな塾</a></li>
+  </ul>
+</nav>
+
 <main>
   <div class="container">
 
-    <section>
+    <section id="note">
       <h2 class="section-title">note お友達ツール <span class="section-count">6件</span></h2>
-    
-      <a class="card" href="https://licodeenar.github.io/note-likes/" target="_blank" rel="noopener">
-        <div class="card-title">【note】スキをくれたお友だち</div>
-        <div class="card-desc">直近の記事からスキをくれたユーザを集計します。</div>
-        <div class="card-url">licodeenar.github.io/note-likes/</div>
-      </a>
-    
-      <a class="card" href="https://licodeenar.github.io/note-likes/compare.html" target="_blank" rel="noopener">
-        <div class="card-title">【note】共通スキユーザーを探す</div>
-        <div class="card-desc">複数のユーザー間で共通してスキを送っている相手を調べます。</div>
-        <div class="card-url">licodeenar.github.io/note-likes/compare.html</div>
-      </a>
-    
-      <a class="card" href="https://licodeenar.github.io/note-likes/babbles.html" target="_blank" rel="noopener">
-        <div class="card-title">【note】共通スキ バブル</div>
-        <div class="card-desc">共通のスキ関係をバブルチャートで可視化します。</div>
-        <div class="card-url">licodeenar.github.io/note-likes/babbles.html</div>
-      </a>
-    
-      <a class="card" href="https://licodeenar.github.io/note-comments/" target="_blank" rel="noopener">
-        <div class="card-title">【note】コメントをくれたお友だち</div>
-        <div class="card-desc">直近の記事からコメントをくれたユーザを集計します。</div>
-        <div class="card-url">licodeenar.github.io/note-comments/</div>
-      </a>
-    
-      <a class="card" href="https://licodeenar.github.io/note-reply-check/" target="_blank" rel="noopener">
-        <div class="card-title">【note】返信漏れチェック</div>
-        <div class="card-desc">記事についたコメントに、返信し忘れていないかをチェックします。</div>
-        <div class="card-url">licodeenar.github.io/note-reply-check/</div>
-      </a>
-    
-      <a class="card" href="https://licodeenar.github.io/note-updated/" target="_blank" rel="noopener">
-        <div class="card-title">【note】おともだち更新状況チェック</div>
-        <div class="card-desc">noteのおともだちが最後に記事をアップした日をチェックします。</div>
-        <div class="card-url">licodeenar.github.io/note-updated/</div>
-      </a>
-    
+      <p class="section-lead">note のユーザーIDを入れるだけで使える、スキ・コメントまわりの便利ツール。</p>
+
+      <div class="cards">
+        <a class="card" href="https://licodeenar.github.io/note-likes/" target="_blank" rel="noopener">
+          <img class="card-thumb" src="https://licodeenar.github.io/note-likes/img/og-image.png" alt="" loading="lazy">
+          <span class="card-body">
+            <span class="card-title">スキをくれたお友だち</span>
+            <span class="card-desc">直近の記事からスキをくれたユーザを集計します。</span>
+          </span>
+        </a>
+        <a class="card" href="https://licodeenar.github.io/note-likes/compare.html" target="_blank" rel="noopener">
+          <img class="card-thumb" src="https://licodeenar.github.io/note-likes/img/og-image.png" alt="" loading="lazy">
+          <span class="card-body">
+            <span class="card-title">共通スキユーザーを探す</span>
+            <span class="card-desc">複数のユーザー間で共通してスキを送っている相手を調べます。</span>
+          </span>
+        </a>
+        <a class="card" href="https://licodeenar.github.io/note-likes/babbles.html" target="_blank" rel="noopener">
+          <img class="card-thumb" src="https://licodeenar.github.io/note-likes/img/og-image-babble.png" alt="" loading="lazy">
+          <span class="card-body">
+            <span class="card-title">共通スキ バブル</span>
+            <span class="card-desc">共通のスキ関係をバブルチャートで可視化します。</span>
+          </span>
+        </a>
+        <a class="card" href="https://licodeenar.github.io/note-comments/" target="_blank" rel="noopener">
+          <img class="card-thumb" src="https://licodeenar.github.io/note-comments/img/og-image.png" alt="" loading="lazy">
+          <span class="card-body">
+            <span class="card-title">コメントをくれたお友だち</span>
+            <span class="card-desc">直近の記事からコメントをくれたユーザを集計します。</span>
+          </span>
+        </a>
+        <a class="card" href="https://licodeenar.github.io/note-reply-check/" target="_blank" rel="noopener">
+          <img class="card-thumb" src="https://licodeenar.github.io/note-reply-check/img/og-image.png" alt="" loading="lazy">
+          <span class="card-body">
+            <span class="card-title">返信漏れチェック <span class="badge">NEW</span></span>
+            <span class="card-desc">記事についたコメントに、返信し忘れていないかをチェックします。</span>
+          </span>
+        </a>
+        <a class="card" href="https://licodeenar.github.io/note-updated/" target="_blank" rel="noopener">
+          <img class="card-thumb" src="https://licodeenar.github.io/note-updated/img/og-image.png" alt="" loading="lazy">
+          <span class="card-body">
+            <span class="card-title">おともだち更新状況チェック</span>
+            <span class="card-desc">noteのおともだちが最後に記事をアップした日をチェックします。</span>
+          </span>
+        </a>
+      </div>
     </section>
 
-    <section>
+    <section id="chrome">
       <h2 class="section-title">Chrome 拡張機能 <span class="section-count">1件</span></h2>
+      <p class="section-lead">ブラウザに入れて使うタイプのツール。</p>
 
-      <a class="card" href="https://github.com/licodeenar/note-follower-checker-addon" target="_blank" rel="noopener">
-        <div class="card-title">note フォロワーチェッカー</div>
-        <div class="card-desc">フォロワーリストを取得し、前回との差分（新規・フォロー外し）を表示するChrome拡張。バックグラウンドで動作。</div>
-        <div class="card-url">github.com/licodeenar/note-follower-checker-addon</div>
-      </a>
+      <div class="cards">
+        <a class="card" href="https://github.com/licodeenar/note-follower-checker-addon" target="_blank" rel="noopener">
+          <img class="card-thumb" src="https://opengraph.githubassets.com/1/licodeenar/note-follower-checker-addon" alt="" loading="lazy">
+          <span class="card-body">
+            <span class="card-title">note フォロワーチェッカー <span class="badge">GitHub</span></span>
+            <span class="card-desc">フォロワーリストを取得し、前回との差分（新規・フォロー外し）を表示します。バックグラウンドで動作。</span>
+          </span>
+        </a>
+      </div>
     </section>
 
-    <section>
+    <section id="other">
       <h2 class="section-title">その他ツール <span class="section-count">2件</span></h2>
+      <p class="section-lead">note 以外のちょっとしたツール。</p>
 
-      <a class="card" href="https://licodeenar.github.io/bclock/" target="_blank" rel="noopener">
-        <div class="card-title">ブラウザで時計</div>
-        <div class="card-desc">ブラウザにデジタル時計を表示するサイト。</div>
-        <div class="card-url">licodeenar.github.io/bclock/</div>
-      </a>
-
-      <a class="card" href="https://licodeenar.github.io/taiheki_checker/" target="_blank" rel="noopener">
-        <div class="card-title">体癖チェッカー</div>
-        <div class="card-desc">あなたの体癖タイプを判定します。</div>
-        <div class="card-url">licodeenar.github.io/taiheki_checker/</div>
-      </a>
+      <div class="cards">
+        <a class="card" href="https://licodeenar.github.io/bclock/" target="_blank" rel="noopener">
+          <img class="card-thumb" src="https://licodeenar.github.io/bclock/img/og-image.png" alt="" loading="lazy">
+          <span class="card-body">
+            <span class="card-title">ブラウザで時計</span>
+            <span class="card-desc">ブラウザにデジタル時計を表示するサイト。</span>
+          </span>
+        </a>
+        <a class="card" href="https://licodeenar.github.io/taiheki_checker/" target="_blank" rel="noopener">
+          <img class="card-thumb" src="https://licodeenar.github.io/taiheki_checker/img/og-image.png" alt="" loading="lazy">
+          <span class="card-body">
+            <span class="card-title">体癖チェッカー</span>
+            <span class="card-desc">あなたの体癖タイプを判定します。</span>
+          </span>
+        </a>
+      </div>
     </section>
 
-    <section>
+    <section id="juku">
       <h2 class="section-title">りな塾 <span class="section-count">1件</span></h2>
+      <p class="section-lead">１日５分の脳トレ。プログラミングで遊ぼう。</p>
 
-      <a class="card" href="https://licodeenar.github.io/lina-juku/" target="_blank" rel="noopener">
-        <div class="card-title">りな塾：目次</div>
-        <div class="card-desc">１日５分の脳トレ。プログラミングで遊ぼう。</div>
-        <div class="card-url">licodeenar.github.io/lina-juku/</div>
-      </a>
+      <div class="cards">
+        <a class="card" href="https://licodeenar.github.io/lina-juku/" target="_blank" rel="noopener">
+          <img class="card-thumb" src="https://licodeenar.github.io/lina-juku/img/og-image.png" alt="" loading="lazy">
+          <span class="card-body">
+            <span class="card-title">りな塾：目次</span>
+            <span class="card-desc">すべての回の一覧はこちらから。</span>
+          </span>
+        </a>
+      </div>
     </section>
 
   </div>
