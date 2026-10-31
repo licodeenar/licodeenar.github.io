@@ -35,9 +35,10 @@
       --accent:     #2d9c8a;   /* noteのグリーンと元のtealの中間 */
       --accent-soft:#e7f4f1;
       --bg:         #ffffff;
-      --bg-section: #fafafa;
+      --bg-section: #f1f3f3;
       --surface:    #ffffff;
       --border:     #efefef;
+      --card-border:#dde2e2;
       --shadow:       0 1px 4px rgba(0, 0, 0, 0.06);
       --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.10);
       --mono: 'IBM Plex Mono', monospace;
@@ -51,9 +52,10 @@
         --accent:     #5cc4b2;
         --accent-soft:#1e3833;
         --bg:         #16191a;
-        --bg-section: #1a1e1f;
+        --bg-section: #121516;
         --surface:    #1f2425;
         --border:     #2b3132;
+        --card-border:#353c3d;
         --shadow:       0 1px 4px rgba(0, 0, 0, 0.3);
         --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.45);
       }
@@ -239,9 +241,10 @@
       text-decoration: none;
       color: inherit;
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1px solid var(--card-border);
       border-radius: 12px;
       overflow: hidden;
+      box-shadow: var(--shadow);
       transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     }
 
@@ -251,15 +254,17 @@
       transform: translateY(-2px);
     }
 
-    /* 画像はスクショが多いので、タイトルが入る上端を基準に切り抜く */
+    /* 画像は白いスクショが多いので、色付きの余白で囲んでカード本体と区別する。
+       タイトルが入る上端を基準に切り抜く */
     .card-thumb {
       display: block;
       width: 100%;
       aspect-ratio: 1.91 / 1;
       object-fit: cover;
       object-position: top center;
-      background: var(--bg-section);
-      border-bottom: 1px solid var(--border);
+      padding: 10px 10px 0;
+      background: var(--accent-soft);
+      border-bottom: 1px solid var(--card-border);
     }
 
     .card-body {
@@ -340,8 +345,9 @@
         width: 112px;
         flex-shrink: 0;
         aspect-ratio: auto;
+        padding: 8px 0 8px 8px;
         border-bottom: none;
-        border-right: 1px solid var(--border);
+        border-right: 1px solid var(--card-border);
       }
       .card-body { padding: 12px 14px; }
     }
